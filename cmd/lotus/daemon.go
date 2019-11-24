@@ -5,7 +5,6 @@ package main
 import (
 	"context"
 	"io/ioutil"
-	"fmt"
 
 	"github.com/filecoin-project/lotus/peermgr"
 	"github.com/multiformats/go-multiaddr"
@@ -33,10 +32,6 @@ var DaemonCmd = &cli.Command{
 		&cli.StringFlag{
 			Name:  "api",
 			Value: "1234",
-		},
-		&cli.StringFlag{
-			Name:  "host",
-			Value: "127.0.0.1",
 		},
 		&cli.StringFlag{
 			Name:   makeGenFlag,
@@ -97,7 +92,6 @@ var DaemonCmd = &cli.Command{
 
 			node.ApplyIf(func(s *node.Settings) bool { return cctx.IsSet("api") },
 				node.Override(node.SetApiEndpointKey, func(lr repo.LockedRepo) error {
-					//host = fmt.Sprintf("/ip4/%v/tcp/", cctx.string("host"))
 					apima, err := multiaddr.NewMultiaddr("/ip4/0.0.0.0/tcp/" +
 						cctx.String("api"))
 					if err != nil {
